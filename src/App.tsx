@@ -1,7 +1,7 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useSelector } from 'react-redux';
-import { RootState } from './store/store';
+import { RootState } from './utils/store';
 
 
 import AppRouter from './AppRouter';

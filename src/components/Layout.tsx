@@ -10,8 +10,8 @@ import {
 import { Outlet, useNavigate } from 'react-router-dom'; // Updated import
 import { AccountCircle, Search, Menu as MenuIcon, Brightness4, Brightness7 } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { toggleTheme } from '../store/themeSlice';
+import { RootState } from '../utils/store';
+import { toggleTheme } from '../utils/themeSlice';
 
 
 const TITLE = 'Library Browser';
@@ -56,7 +56,7 @@ export default function Layout() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" sx={{ flexGrow: 1, textAlign: { xs: "center", md: "start" } }}>
+                    <Typography variant="h6" sx={{ flexGrow: 0, textAlign: { xs: "center", md: "start" } }}>
                         {TITLE}
                     </Typography>
                     <Box
