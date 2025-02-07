@@ -1,22 +1,40 @@
-import { Book } from "@elie309/bookbrowsinglibrary";
-import { useEffect } from "react"
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
+
+
+import AppRouter from './AppRouter';
 
 function App() {
+  const darkMode = useSelector((state: RootState) => state.theme.darkMode);
 
-  const fetchFunction = () => {
-    let book = new Book("The Great Gatsby", "F. Scott Fitzgerald", "1925", []);
-    console.log(book.title)
-  }
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+      primary: {
+        light: '#ff7961',
+        main: '#f44336',
+        dark: '#ba000d',
+        contrastText: '#fff',
+      },
+      secondary: {
+        light: '#ff7961',
+        main: '#f44336',
+        dark: '#ba000d',
+        contrastText: '#000',
+      }
+    }
+  });
 
-  useEffect(() => {
-    console.log("Hello World!")
-    fetchFunction()
-  }, [])
+  
+
   return (
-    <>
-      <p>Hello World!</p>
-    </>
-  )
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+         <AppRouter />
+      </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
