@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserState {
   isAuthenticated: boolean;
-  userContext: any | null;
+  username: string | null;
+  access_token: string | null;
 }
 
 const initialState: UserState = {
   isAuthenticated: false,
-  userContext: null,
+  username: null,
+  access_token: localStorage.getItem('access_token') || null,
 };
 
 const userSlice = createSlice({
@@ -16,16 +18,13 @@ const userSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<any>) => {
       state.isAuthenticated = true;
-      state.userContext = action.payload;
-      localStorage.setItem('access_token', action.payload.access_token);
-      localStorage.setItem('refresh_token', action.payload.refresh_token);
-
+      state.username = action.payload.username;
+      state.access_token = action.payload.access_token;
     },
     logout: (state) => {
       state.isAuthenticated = false;
-      state.userContext = null;
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
+      state.username = null;
+      state.access_token = null;
     },
   },
 });

@@ -2,8 +2,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useSelector } from 'react-redux';
 import { RootState } from './utils/store';
-
-
 import AppRouter from './AppRouter';
 
 function App() {
@@ -27,12 +25,10 @@ function App() {
     }
   });
 
-  
-
   return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-         <AppRouter />
+        <AppRouter />
       </ThemeProvider>
   );
 }
