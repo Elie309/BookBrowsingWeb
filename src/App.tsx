@@ -19,9 +19,9 @@ function App() {
         contrastText: '#fff',
       },
       secondary: {
-        light: '#ff7961',
-        main: '#f44336',
-        dark: '#ba000d',
+        light: '#fbdaaf',
+        main: '#F4A236',
+        dark: '#EA8B0D',
         contrastText: '#000',
       }
     }

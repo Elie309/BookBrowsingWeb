@@ -56,7 +56,7 @@ export default function Layout() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" sx={{ flexGrow: 0, textAlign: { xs: "center", md: "start" } }}>
+                    <Typography variant="h6" sx={{ flexGrow: { xs: 1, md: 0 }, textAlign: { xs: "center", md: "start" } }}>
                         {TITLE}
                     </Typography>
                     <Box
@@ -65,8 +65,8 @@ export default function Layout() {
                             display: { xs: 'none', md: 'flex' }
                         }}
                     >
-                        <Button color="inherit" onClick={() => navigate("/books") }>Books</Button>
-                        <Button color="inherit" onClick={() => navigate("/authors") }>Authors</Button>
+                        <Button color="inherit" onClick={() => navigate("/books")}>Books</Button>
+                        <Button color="inherit" onClick={() => navigate("/authors")}>Authors</Button>
                     </Box>
                     <Box sx={{
                         position: 'relative', marginRight: '20px',
@@ -114,7 +114,11 @@ export default function Layout() {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                        <MenuItem onClick={() => {
+                            handleClose();
+                            navigate("/logout");
+                        }}>Logout
+                        </MenuItem>
                     </Menu>
                 </Toolbar>
             </AppBar>
