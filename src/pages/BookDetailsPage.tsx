@@ -4,6 +4,8 @@ import { Box, Container, Typography, Link } from '@mui/material';
 import Loading from '../components/Loading';
 import { Book, BookService } from '@elie309/bookbrowsinglibrary';
 import Skeleton from '@mui/material/Skeleton';
+import { useSelector } from 'react-redux';
+import { RootState } from '../utils/store';
 
 export default function BookDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -13,6 +15,8 @@ export default function BookDetailsPage() {
 
   const [loading, setLoading] = useState(false);
 
+  const {role} = useSelector((state: RootState) => state.user);
+
   const fetchBookDetails = async () => {
     try {
       setLoading(true);
@@ -20,7 +24,6 @@ export default function BookDetailsPage() {
       if (id) {
         const book = await BookService.fetchBookDetails(id);
         setBook(book);
-        console.log(book);
       }
     } catch (e) {
       console.error(e);
@@ -32,6 +35,11 @@ export default function BookDetailsPage() {
 
 
   useEffect(() => {
+
+    if(role === "authors"){
+      navigate("/authors")
+    }
+
     fetchBookDetails();
   }, [id]);
 

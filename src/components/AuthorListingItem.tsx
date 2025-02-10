@@ -6,12 +6,23 @@ import { Author } from '@elie309/bookbrowsinglibrary';
 export default function AuthorListingItem(author: Author) {
   const navigate = useNavigate();
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [validImage, setValidImage] = useState(true);
 
   useEffect(() => {
     return () => {
       setImageLoaded(false);
+      setValidImage(true);
     };
   }, [author]);
+
+  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const img = event.currentTarget;
+    if (img.naturalWidth <= 1 || img.naturalHeight <= 1) {
+      setValidImage(false);
+    } else {
+      setImageLoaded(true);
+    }
+  };
 
   return (
     <Card 
@@ -25,13 +36,14 @@ export default function AuthorListingItem(author: Author) {
         width: { xs: '100%', sm: '75%', md: '50%', lg: '33%', xl: '25%' } 
       }}
     >
-      {((author.photosUrl?.length || [].length) > 0) && (
+      {((author.photosUrl?.length || [].length) > 0) && validImage && (
         <CardMedia
           component="img"
           sx={{ width: 150, height: 250 }}
           image={author.photosUrl[0] || ''}
           alt={author.name}
-          onLoad={() => setImageLoaded(true)}
+          onLoad={handleImageLoad}
+          onError={() => setValidImage(false)}
           style={{ display: imageLoaded ? 'block' : 'none' }}
         />
       )}

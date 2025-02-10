@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Container, TextField, MenuItem, Select, CircularProgress, Box } from '@mui/material';
 import AuthorListingItem from '../components/AuthorListingItem';
 import { Author, AuthorServices } from '@elie309/bookbrowsinglibrary';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { RootState } from '../utils/store';
 
 enum Sort {
   NAME = 'name',
@@ -17,6 +20,9 @@ export default function AuthorsListPage() {
   const [sort, setSort] = useState<Sort>(Sort.NAME);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const {role} = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
+
   const fetchAuthors = async () => {
     setLoading(true);
     let fetchedAuthors = await AuthorServices.fetchAuthors(query, page, 10, sort);
@@ -26,6 +32,11 @@ export default function AuthorsListPage() {
   };
 
   useEffect(() => {
+
+    if(role === "books"){
+      navigate("/books")
+    }
+
     const savedQuery = localStorage.getItem('authorQuery');
     const savedSort = localStorage.getItem('authorSort');
     if (savedQuery) setQuery(savedQuery);

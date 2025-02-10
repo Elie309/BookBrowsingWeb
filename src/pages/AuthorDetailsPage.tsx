@@ -4,11 +4,19 @@ import { Box, Container, Typography } from '@mui/material';
 import Loading from '../components/Loading';
 import { Author, AuthorServices } from '@elie309/bookbrowsinglibrary';
 import Skeleton from '@mui/material/Skeleton';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { RootState } from '../utils/store';
+
 
 export default function AuthorDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const [author, setAuthor] = useState<Author | null>(null);
   const [loading, setLoading] = useState(false);
+
+  
+  const {role} = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
 
   const fetchAuthorDetails = async () => {
     try {
@@ -26,6 +34,11 @@ export default function AuthorDetailsPage() {
 
 
   useEffect(() => {
+
+    if(role === "books"){
+      navigate("/books")
+      return;
+    }
 
     fetchAuthorDetails();
   }, [id]);

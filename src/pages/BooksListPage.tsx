@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Container, TextField, MenuItem, Select, CircularProgress, Box } from '@mui/material';
 import BookListingItem from '../components/BookListingItem';
 import { Book, BookService } from '@elie309/bookbrowsinglibrary';
+import { useSelector } from 'react-redux';
+import { RootState } from '../utils/store';
+import { useNavigate } from 'react-router-dom';
 
 enum Sort {
   TITLE = 'title',
@@ -16,6 +19,9 @@ export default function BooksListPage() {
   const [textNotFound, setTextNotFound] = useState('Search for books!');
   const [query, setQuery] = useState('');
 
+  const {role} = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
+
   const [sort, setSort] = useState<Sort>(Sort.TITLE);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -28,6 +34,11 @@ export default function BooksListPage() {
   };
 
   useEffect(() => {
+
+    if(role === "authors"){
+      navigate("/authors")
+    }
+
     const savedQuery = localStorage.getItem('query');
     const savedSort = localStorage.getItem('sort');
 
