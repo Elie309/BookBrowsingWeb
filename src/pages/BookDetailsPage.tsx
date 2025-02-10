@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Box, Container, Typography } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Container, Typography, Link } from '@mui/material';
 import Loading from '../components/Loading';
 import { Book, BookService } from '@elie309/bookbrowsinglibrary';
 import Skeleton from '@mui/material/Skeleton';
@@ -8,6 +8,8 @@ import Skeleton from '@mui/material/Skeleton';
 export default function BookDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const [book, setBook] = useState<Book | null>(null);
+
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -46,7 +48,7 @@ export default function BookDetailsPage() {
   }
 
   return (
-    <Container  sx={{ height: '100vh'  }}>
+    <Container sx={{ height: '100vh' }}>
       <Box sx={{ padding: 4, height: "90%", overflowY: 'auto' }}>
         <Typography variant="h4" gutterBottom>{book.title}</Typography>
 
@@ -68,9 +70,19 @@ export default function BookDetailsPage() {
         </Box>
 
 
+        <Typography variant='h6' gutterBottom>Authors:</Typography>
+        <Typography variant="body1" marginBottom={2}>
 
-        <Typography variant="h6" marginBottom={2}>
-          <strong>Authors:</strong> {book.authors.toString()}
+          {book.authors.map((author, index) => (
+            <Typography variant='body2' key={index}>
+              <Link component={"a"} sx={{cursor: "pointer"}} onClick={() => {
+                navigate(`/authors/${book.authorsKey[index]}`)
+              }
+              }>
+                {author}
+              </Link>
+            </Typography>
+          ))}
         </Typography>
 
         <Typography variant="body2" marginBottom={2} color="textSecondary">
@@ -80,7 +92,7 @@ export default function BookDetailsPage() {
           <strong>Edition Count:</strong> {book.editionCount || 'Unknown'}
         </Typography>
 
-        
+
         <Typography variant="body2" marginBottom={2} color="textSecondary" textAlign={"justify"}>
           <strong>Subjects People:</strong> {book.subject_people?.length ? book.subject_people.join(', ') : 'Unknown'}
         </Typography>

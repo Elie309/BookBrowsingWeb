@@ -74,7 +74,7 @@ export default function AppRouter() {
             <Route path="/authors" element={<AuthorsListPage />} />
             <Route path="/books" element={<BooksListPage />} />
             <Route path="/books/:id" element={<BookDetailsPage />} />
-            <Route path="/author/:id" element={<AuthorDetailsPage />} />
+            <Route path="/authors/:id" element={<AuthorDetailsPage />} />
             <Route path="/logout" element={<LogoutPage />} />
             <Route path="*" element={<div>404 Not Found</div>} />
           </Route>

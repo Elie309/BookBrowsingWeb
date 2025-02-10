@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Container, AppBar, Toolbar, Typography, InputBase, Menu, MenuItem,
+    Container, AppBar, Toolbar, Typography, Menu, MenuItem,
     IconButton, Button, Drawer,
     List,
     ListItemButton,
@@ -8,7 +8,7 @@ import {
     Box
 } from '@mui/material';
 import { Outlet, useNavigate, Link as RouterLink } from 'react-router-dom';
-import { AccountCircle, Search, Menu as MenuIcon, Brightness4, Brightness7 } from '@mui/icons-material';
+import { AccountCircle, Menu as MenuIcon, Brightness4, Brightness7 } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../utils/store';
 import { toggleTheme } from '../utils/themeSlice';
@@ -88,18 +88,6 @@ export default function Layout() {
                         {(role === 'all' || role === 'authors') && (
                             <Button color="inherit" onClick={() => navigate("/authors")}>Authors</Button>
                         )}
-                    </Box>
-                    <Box sx={{
-                        position: 'relative', marginRight: '20px',
-                        backgroundColor: '#fff', borderRadius: '4px',
-                        display: { xs: 'none', md: 'flex' },
-                        alignItems: 'center'
-                    }}>
-                        <Search style={{ marginLeft: '10px', fill: 'GrayText' }} /> {/* Use primary color */}
-                        <InputBase
-                            placeholder="Search…"
-                            style={{ marginLeft: '10px', flex: 1, color: 'GrayText' }}
-                        />
                     </Box>
                     <IconButton
                         edge="end"

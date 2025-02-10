@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.3.0",
-    "@elie309/bookbrowsinglibrary": "^1.0.18",
+    "@elie309/bookbrowsinglibrary": "^1.0.22",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.3",

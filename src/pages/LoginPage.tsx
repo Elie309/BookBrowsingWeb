@@ -55,7 +55,6 @@ export default function LoginPage() {
         navigate('/login')
       }
     }
-    console.log(theme.palette.primary.main)
     setLoading(false)
 
   }, [navigate]);
