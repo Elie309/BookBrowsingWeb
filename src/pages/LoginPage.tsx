@@ -2,19 +2,41 @@ import { useEffect, useState } from 'react';
 import { TextField, Button, IconButton, Typography, InputAdornment, Box } from '@mui/material';
 import { Visibility, VisibilityOff, Brightness4, Brightness7 } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
-// import { useAuth0 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../utils/store';
 import { toggleTheme } from '../utils/themeSlice';
-import AuthService from '../Services/AuthService';
 import Loading from '../components/Loading';
+import { login } from '../utils/userSlice';
+import Logo from '../components/Logo';
+
+
+
+const users = [
+  {
+    username: "grappasystems3@gmail.com",
+    password: "GSRecruit2025",
+    role: "all"
+  },
+  {
+    username: "grappasystems4@gmail.com",
+    password: "GSRecruit2025",
+    role: "books"
+  },
+  {
+    username: "grappasystems5@gmail.com",
+    password: "GSRecruit2025",
+    role: "authors"
+  },
+
+]
 
 
 export default function LoginPage() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const darkMode = useSelector((state: RootState) => state.theme.darkMode);
+  const { isAuthenticated } = useSelector((state: RootState) => state.user);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -25,42 +47,52 @@ export default function LoginPage() {
 
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
 
-    if (!code) {
-      console.log(window.location.pathname);
-      if (window.location.pathname !== "login") {
-        navigate("/login");
+    if (isAuthenticated) {
+      navigate('/')
+    } else {
+      if (window.location.pathname !== '/login') {
+        navigate('/login')
       }
-      setLoading(false);
-      return;
     }
-
-
-    AuthService.exchangeCodeForToken(code)
-      .then((accessToken) => {
-        console.log(accessToken);
-        navigate("/books")
-      })
-      .catch((error) => console.error("Error exchanging code:", error));
+    console.log(theme.palette.primary.main)
+    setLoading(false)
 
   }, [navigate]);
 
-  const handleOAuthLogin = async () => {
-    if (username.length < 4 || password.length < 8) {
-      setError("Password must be at least 8 characters long, and username must be at least 4 characters long");
+  // const handleOAuthLogin = async () => {
+  // if (username.length < 4 || password.length < 8) {
+  //   setError("Password must be at least 8 characters long, and username must be at least 4 characters long");
+  //   return;
+  // }
+
+  // sessionStorage.setItem(AuthService.TEMP_USERNAME_KEY, username);
+
+  // try {
+  //   await AuthService.login(username, password);
+  // } catch (err) {
+  //   setError("Failed to authenticate with OAuth.");
+  // }
+  // };
+
+  const handleDumpLogin = () => {
+    const userList = users.find((user) => user.username === username && user.password === password);
+
+    if (!userList) {
+      setError("Invalid username or password");
       return;
     }
-
-    sessionStorage.setItem(AuthService.TEMP_USERNAME_KEY, username);
-
-    try {
-      await AuthService.login(username, password);
-    } catch (err) {
-      setError("Failed to authenticate with OAuth.");
+    let user = {
+      username: userList.username,
+      role: userList.role
     }
-  };
+
+    dispatch(login(user))
+
+    navigate("/")
+
+
+  }
 
   if (loading) {
     return <Loading />
@@ -81,9 +113,17 @@ export default function LoginPage() {
         <IconButton onClick={() => dispatch(toggleTheme())} style={{ alignSelf: 'flex-end' }}>
           {darkMode ? <Brightness7 /> : <Brightness4 />}
         </IconButton>
-        <Typography variant="h4" style={{ marginBottom: theme.spacing(2) }}>
-          Login
-        </Typography>
+        <Box flex={1} display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+          <Logo fill={"none"} stroke={`${theme.palette.primary.main}`} width='150' height='150' className='' />
+          <Typography variant="h4" style={{ marginBottom: theme.spacing(2) }}>
+            Login
+          </Typography>
+          <Typography variant="h6" textAlign={"center"} style={{ marginBottom: theme.spacing(2) }}>
+            Your favorite Books & Authors Library
+          </Typography>
+
+        </Box>
+
         <form action="">
           <TextField
             label="Username"
@@ -116,10 +156,15 @@ export default function LoginPage() {
             }}
           />
 
-          {error && <Typography color="error" noWrap>{error}</Typography>}
+          {error &&
+            <Box marginY={theme.spacing(2)} >
+              <Typography color="error" noWrap textAlign={"center"}>{error}</Typography>
+            </Box>}
 
-          <Box display="flex" flexDirection={"column"} gap={theme.spacing(2)}>
-            <Button variant="contained" color="primary" onClick={handleOAuthLogin}>
+
+          <Box marginY={theme.spacing(2)} flex={1} display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+            <Button variant="contained" color="primary"
+                 style={{width: "50%"}} onClick={handleDumpLogin}>
               Login
             </Button>
           </Box>

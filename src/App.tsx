@@ -10,26 +10,26 @@ function App() {
   const theme = createTheme({
     palette: {
       mode: darkMode ? 'dark' : 'light',
-      primary: {
+      secondary: {
         light: '#ff7961',
         main: '#f44336',
         dark: '#ba000d',
         contrastText: '#fff',
       },
-      secondary: {
+      primary: {
         light: '#fbdaaf',
         main: '#F4A236',
         dark: '#EA8B0D',
-        contrastText: '#000',
+        contrastText: '#fff',
       }
     }
   });
 
   return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <AppRouter />
-      </ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppRouter />
+    </ThemeProvider>
   );
 }
 

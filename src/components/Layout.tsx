@@ -7,7 +7,7 @@ import {
     ListItemText,
     Box
 } from '@mui/material';
-import { Outlet, useNavigate } from 'react-router-dom'; // Updated import
+import { Outlet, useNavigate } from 'react-router-dom'; 
 import { AccountCircle, Search, Menu as MenuIcon, Brightness4, Brightness7 } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../utils/store';

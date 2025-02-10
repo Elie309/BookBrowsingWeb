@@ -3,13 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface UserState {
   isAuthenticated: boolean;
   username: string | null;
-  access_token: string | null;
+  role: string | null;
 }
 
 const initialState: UserState = {
   isAuthenticated: false,
   username: null,
-  access_token: localStorage.getItem('access_token') || null,
+  role: null,
 };
 
 const userSlice = createSlice({
@@ -19,12 +19,19 @@ const userSlice = createSlice({
     login: (state, action: PayloadAction<any>) => {
       state.isAuthenticated = true;
       state.username = action.payload.username;
-      state.access_token = action.payload.access_token;
+      state.role = action.payload.role;
+
+      localStorage.setItem('username', action.payload.username);
+      localStorage.setItem('role', action.payload.role);
+
     },
     logout: (state) => {
       state.isAuthenticated = false;
       state.username = null;
-      state.access_token = null;
+      state.role = null;
+
+      localStorage.removeItem('username');
+      localStorage.removeItem('role');
     },
   },
 });

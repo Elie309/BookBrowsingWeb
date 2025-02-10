@@ -2,20 +2,20 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout as LogoutRedux } from '../utils/userSlice';
 import { useNavigate } from 'react-router';
-import { useAuth0 } from '@auth0/auth0-react';
+// import { useAuth0 } from '@auth0/auth0-react';
 
 export default function LogoutPage() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  const {logout} = useAuth0()
+  // const {logout} = useAuth0()
 
 
   useEffect(() => {
 
     dispatch(LogoutRedux());
-    logout();
+    // logout();
     navigate('/login');
   }, [dispatch]);
 
