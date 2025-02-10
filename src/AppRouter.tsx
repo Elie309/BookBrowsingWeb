@@ -12,6 +12,7 @@ import { RootState } from './utils/store';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
+import Dashboard from './pages/Dashboard';
 
 export default function AppRouter() {
   const isAuthenticatedState = useSelector((state: RootState) => selectIsAuthenticated(state));
@@ -69,9 +70,10 @@ export default function AppRouter() {
           </>
         ) : (
           <Route element={<Layout />}>
+            <Route path='/' element={<Dashboard />} />
             <Route path="/authors" element={<AuthorsListPage />} />
             <Route path="/books" element={<BooksListPage />} />
-            <Route path="/book/:id" element={<BookDetailsPage />} />
+            <Route path="/books/:id" element={<BookDetailsPage />} />
             <Route path="/author/:id" element={<AuthorDetailsPage />} />
             <Route path="/logout" element={<LogoutPage />} />
             <Route path="*" element={<div>404 Not Found</div>} />

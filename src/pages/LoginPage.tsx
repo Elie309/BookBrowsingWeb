@@ -21,12 +21,12 @@ const users = [
   {
     username: "grappasystems4@gmail.com",
     password: "GSRecruit2025",
-    role: "books"
+    role: "authors"
   },
   {
     username: "grappasystems5@gmail.com",
     password: "GSRecruit2025",
-    role: "authors"
+    role: "books"
   },
 
 ]
@@ -76,6 +76,17 @@ export default function LoginPage() {
   // };
 
   const handleDumpLogin = () => {
+
+    if(username.length < 4) {
+      setError("Username must be at least 4 characters long");
+      return;
+    }
+
+    if(password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      return;
+    }
+
     const userList = users.find((user) => user.username === username && user.password === password);
 
     if (!userList) {

@@ -7,11 +7,12 @@ import {
     ListItemText,
     Box
 } from '@mui/material';
-import { Outlet, useNavigate } from 'react-router-dom'; 
+import { Outlet, useNavigate, Link as RouterLink } from 'react-router-dom';
 import { AccountCircle, Search, Menu as MenuIcon, Brightness4, Brightness7 } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../utils/store';
 import { toggleTheme } from '../utils/themeSlice';
+import Logo from './Logo';
 
 
 const TITLE = 'Library Browser';
@@ -22,6 +23,7 @@ export default function Layout() {
     const navigate = useNavigate(); // Use useNavigate hook
 
     const darkMode = useSelector((state: RootState) => state.theme.darkMode);
+    const { role } = useSelector((state: RootState) => state.user); // Get user role
     const dispatch = useDispatch();
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -56,17 +58,36 @@ export default function Layout() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" sx={{ flexGrow: { xs: 1, md: 0 }, textAlign: { xs: "center", md: "start" } }}>
-                        {TITLE}
-                    </Typography>
+
+                    {/* TITLE AND LOGO */}
+                     <Box
+                         component={RouterLink} to="/"
+                         sx={{
+                             flexGrow: { xs: 1, md: 0 },
+                             textDecoration: 'none', color: 'inherit',
+                            justifyContent: { xs: 'center', md: 'start'},
+                         }}
+                         flex={1} display="flex" alignItems="center" gap={1}
+                     >
+                         <Logo width='24' height='24' fill={"none"} stroke='white' className='' />
+                         <Typography variant="h6" noWrap>
+                             {TITLE}
+                         </Typography>
+                     </Box>
+
+                    {/* BUTTONS  */}
                     <Box
                         sx={{
                             justifyContent: 'center', flexGrow: 1, gap: '10px',
                             display: { xs: 'none', md: 'flex' }
                         }}
                     >
-                        <Button color="inherit" onClick={() => navigate("/books")}>Books</Button>
-                        <Button color="inherit" onClick={() => navigate("/authors")}>Authors</Button>
+                        {(role === 'all' || role === 'books') && (
+                            <Button color="inherit" onClick={() => navigate("/books")}>Books</Button>
+                        )}
+                        {(role === 'all' || role === 'authors') && (
+                            <Button color="inherit" onClick={() => navigate("/authors")}>Authors</Button>
+                        )}
                     </Box>
                     <Box sx={{
                         position: 'relative', marginRight: '20px',
@@ -133,12 +154,16 @@ export default function Layout() {
                 </Typography>
                 <div style={{ margin: '10px' }} />
                 <List>
-                    <ListItemButton onClick={() => navigate("/books")}>
-                        <ListItemText primary="Books" />
-                    </ListItemButton>
-                    <ListItemButton onClick={() => navigate("/authors")}>
-                        <ListItemText primary="Authors" />
-                    </ListItemButton>
+                    {(role === 'all' || role === 'books') && (
+                        <ListItemButton onClick={() => navigate("/books")}>
+                            <ListItemText primary="Books" />
+                        </ListItemButton>
+                    )}
+                    {(role === 'all' || role === 'authors') && (
+                        <ListItemButton onClick={() => navigate("/authors")}>
+                            <ListItemText primary="Authors" />
+                        </ListItemButton>
+                    )}
                     <ListItemButton onClick={toggleDarkMode}>
                         <ListItemText primary={darkMode ? "Light Mode" : "Dark Mode"} />
                         {darkMode ? <Brightness7 /> : <Brightness4 />}
