@@ -33,7 +33,7 @@ export default function AuthorListingItem(author: Author) {
         marginBottom: 2, 
         display: 'flex', 
         flexDirection: 'row', 
-        width: { xs: '100%', sm: '75%', md: '50%', lg: '33%', xl: '25%' } 
+        width: { xs: '100%', sm: '75%', md: '60%' } 
       }}
     >
       {((author.photosUrl?.length || [].length) > 0) && validImage && (

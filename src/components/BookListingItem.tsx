@@ -18,7 +18,7 @@ export default function BookListingItem(book: Book) {
                 marginBottom: 2, 
                 display: 'flex', 
                 flexDirection: 'row', 
-                width: { xs: '100%', sm: '75%', md: '50%', lg: '33%', xl: '25%' } 
+                width: { xs: '100%', sm: '75%', md: '60%' } 
             }}
         >
 
@@ -38,14 +38,34 @@ export default function BookListingItem(book: Book) {
             )}
             <CardContent sx={{ flex: 1 }} >
                 <Typography variant="h6">{book.title}</Typography>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2"
+                 width={"100%"} 
+                 textOverflow={"ellipsis"} 
+                 sx={{ 
+                   marginTop: 1, 
+                   overflow: 'hidden', 
+                   display: '-webkit-box', 
+                   WebkitLineClamp: 2, 
+                   WebkitBoxOrient: 'vertical' 
+                 }}
+                  color="textSecondary">
                     {book.authors.join(', ')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                     {book.publishYear}
                 </Typography>
                 {/* Description */}
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2" 
+                 width={"100%"} 
+                 textOverflow={"ellipsis"} 
+                 sx={{ 
+                   marginTop: 1, 
+                   overflow: 'hidden', 
+                   display: '-webkit-box', 
+                   WebkitLineClamp: 2, 
+                   WebkitBoxOrient: 'vertical' 
+                 }}
+                color="textSecondary">
                     {book.description}
                 </Typography>
             </CardContent>
